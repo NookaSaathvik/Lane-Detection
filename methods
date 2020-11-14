@@ -9,7 +9,6 @@ def region_of_interest(img, vertices):
     masked_image = cv2.bitwise_and(img, mask)
     return masked_image
 
-
 def draw_the_lines(img, lines):
     img = np.copy(img)
     blank_image = np.zeros((img.shape[0], img.shape[1], 3), dtype=np.uint8)
@@ -31,16 +30,16 @@ def process(image):
        # (0, height),
         #(width/2, height/2),
        # (width, height)
-        (500,500),(800,300), (1200, 500),
+        (500,500),(500,300), (1200, 500),
     ]
     gray_image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     canny_image = cv2.Canny(gray_image, 100, 120)
     cropped_image = region_of_interest(canny_image,
                     np.array([region_of_interest_vertices], np.int32),)
     lines = cv2.HoughLinesP(cropped_image,
-                            rho=5,
+                            rho=2,
                             theta=np.pi/180,
-                            threshold= 150,
+                            threshold= 30,
                             lines=np.array([]),
                             minLineLength=(18),
                             maxLineGap=(25))
@@ -53,7 +52,7 @@ def process(image):
         return image_with_lines
 
 
-cap = cv2.VideoCapture('/Users/saathviknooka/PycharmProjects/lane/3686 (1).mp4')
+cap = cv2.VideoCapture('/Users/saathviknooka/PycharmProjects/lane/3674.mp4')
 # 16 sec vid ----> /Users/saathviknooka/PycharmProjects/lane/3686 (1).mp4
 # 6 sec vid ----> /Users/saathviknooka/PycharmProjects/lane/3674.mp4
 
